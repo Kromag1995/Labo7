@@ -1,0 +1,16 @@
+*.bin
+*.tar
+*.csv
+*.txt
+*.zip
+/venv
+/source_c
+/source_f
+/Tisean_3.0.1
+/randomness_testsuite-master
+/datos
+/muestras_del_picoscope_en_bin
+*/.ipynb_checkpoints
+*/__pycache__
+Makefile
+config.*
