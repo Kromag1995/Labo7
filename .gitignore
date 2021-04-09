@@ -10,6 +10,7 @@
 /randomness_testsuite-master
 /datos
 /muestras_del_picoscope_en_bin
+/maximos
 */.ipynb_checkpoints
 */__pycache__
 Makefile

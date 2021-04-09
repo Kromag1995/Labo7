@@ -1,4 +1,7 @@
 import numpy as np
+from numba import njit
+
+@njit()
 def complejidad(S):
     """
     Calcula la complejidad de una lista de 0 y 1
