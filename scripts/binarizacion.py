@@ -1,17 +1,12 @@
 import numpy as np
 import os
-from complejidad import complejidad
-from bin_media import bin_media
-from bin_mediana import bin_mediana
-from detectar_maximos import detectar_maximos
-from utils import printProgressBar
+from .complejidad import complejidad
+from .bin_media import bin_media
+from .bin_mediana import bin_mediana
+from .utils import printProgressBar
 
 
-
-
-def main(crear_maximos):
-    if crear_maximos:
-        detectar_maximos(".csv")
+def binarizacion():
     resultados_Complejidad = "Nombre del Archivo;Longitud de la cadena;Media;Complejidad_Media(c,c/b);Mediana;Complejidad_Mediana(c,c/b) \n"
     for dirpath,dirname, files in os.walk('./maximos/Nobinarizados'):
         l = len(files)
@@ -49,7 +44,3 @@ def main(crear_maximos):
     output_file = open('Resultados3.txt', 'w')
     output_file.write(resultados_Complejidad)
     output_file.close()
-
-if __name__ == "__main__":
-    complejidad([0,1])
-    main(False)

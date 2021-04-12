@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.signal import find_peaks
 import os
-from utils import printProgressBar
+from .utils import printProgressBar
 
 def detectar_maximos(mode):
     if not  "maximos" in os.listdir():
@@ -9,9 +9,11 @@ def detectar_maximos(mode):
         os.mkdir("maximos/Nobinarizados")
         os.mkdir("maximos/Binarizados")
     datos=[]
+    Qd = len(os.listdir('./datos'))
+    Qdd = 0
+    l = 10
+    printProgressBar(0, l*Qd, prefix = 'Progress:', suffix = 'Complete', length = 50)
     for dirpath,dirname, files in os.walk('./datos'):
-        l = len(files)
-        printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
         for i, archivo in enumerate(files):
             if (mode in archivo):
 
@@ -35,7 +37,7 @@ def detectar_maximos(mode):
                 archivo = archivo.replace(".csv","").replace("DATA_","").replace("Millones","")
                 np.savetxt(f"./maximos/Nobinarizados/{archivo}_V",maximos_V)
                 np.savetxt(f"./maximos/Nobinarizados/{archivo}_t",maximos_t)
-                printProgressBar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+                printProgressBar(i + 1 + l*Qdd, l*Qd, prefix = 'Progress:', suffix = 'Complete', length = 50)
                 del(tira)
                 del(filtrado_t)
                 del(filtrado_V)
@@ -43,3 +45,4 @@ def detectar_maximos(mode):
                 del(maximos_V)
                 del(peaks)
                 del(tiempos)
+        Qdd += 1

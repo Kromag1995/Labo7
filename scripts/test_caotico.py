@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from falsos_vecinos import test_fv
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from lyapunov import lyapunov
 
 """
@@ -24,13 +24,13 @@ for dirpath,dirname, files in os.walk(input_path):
         fv, caotico, neecsito_ver_mas, d_E  = test_fv(datos)
         if neecsito_ver_mas:
             fv, caotico, neecsito_ver_mas, d_E  = test_fv(datos,dimension_max=30)
-        plt.plot(fv[:, 0], fv[:, 1]*100, '.-b')
-        plt.title('False nearest neighbours d=1')
-        plt.xlabel(r'Dimension', fontsize=14)
-        plt.ylabel(r'False nearest neighbours (%)', fontsize=14)
-        plt.grid(True)
+        #plt.plot(fv[:, 0], fv[:, 1]*100, '.-b')
+        #plt.title('False nearest neighbours d=1')
+        #plt.xlabel(r'Dimension', fontsize=14)
+        #plt.ylabel(r'False nearest neighbours (%)', fontsize=14)
+        #plt.grid(True)
         if caotico:
-            plt.plot(fv[d_E-1,0],fv[d_E-1,1]*100, '*r')
+            #plt.plot(fv[d_E-1,0],fv[d_E-1,1]*100, '*r')
             print("Dimension de embeding : " + str(d_E))
             lyap,paso = lyapunov(datos, d_E)
             if paso:

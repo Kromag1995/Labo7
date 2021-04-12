@@ -7,10 +7,11 @@
 /source_c
 /source_f
 /Tisean_3.0.1
-/randomness_testsuite-master
+/randomness_testsuite
 /datos
 /muestras_del_picoscope_en_bin
 /maximos
+/.ipynb_checkpoints
 */.ipynb_checkpoints
 */__pycache__
 Makefile
