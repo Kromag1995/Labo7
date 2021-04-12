@@ -7,7 +7,7 @@ from .utils import printProgressBar
 
 
 def binarizacion():
-    resultados_Complejidad = "Nombre del Archivo;Longitud de la cadena;Media;Complejidad_Media(c,c/b);Mediana;Complejidad_Mediana(c,c/b) \n"
+    resultados_Complejidad = "Nombre del Archivo;Longitud de la cadena;Media;Complejidad_Media;Mediana;Complejidad_Mediana \n"
     for dirpath,dirname, files in os.walk('./maximos/Nobinarizados'):
         l = len(files)
         printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
@@ -33,7 +33,7 @@ def binarizacion():
             complejidad_media = complejidad(binarios_media) # Calculo la complejidad
             complejidad_mediana = complejidad(binarios_mediana)
             "Guarda los resultados en la string"
-            resultados_Complejidad += f"{archivo};{len(binarios_media)};{media};{str(complejidad_media)};{mediana};{str(complejidad_mediana)}\n"
+            resultados_Complejidad += f"{archivo};{len(binarios_media)};{media};{complejidad_media[1]};{mediana};{complejidad_mediana[1]}\n"
             "Elimina las variables que ya no usamos por cuestiones de espacio"
             printProgressBar(k + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
             del(maximos)
