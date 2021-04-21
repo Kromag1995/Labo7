@@ -1,32 +1,34 @@
 import numpy as np
 from scipy.signal import find_peaks
 import os
-from .utils import printProgressBar
+from scipy.io import loadmat
 
-def detectar_maximos(mode):
+
+def detectar_maximos(direccion,distance,height, piso):
     if not  "maximos" in os.listdir():
         os.mkdir("maximos")
         os.mkdir("maximos/Nobinarizados")
         os.mkdir("maximos/Binarizados")
     datos=[]
-    Qd = len(os.listdir('./datos'))
-    Qdd = 0
-    l = 10
-    printProgressBar(0, l*Qd, prefix = 'Progress:', suffix = 'Complete', length = 50)
-    for dirpath,dirname, files in os.walk('./datos'):
+    for dirpath,dirname, files in os.walk(direccion):
         for i, archivo in enumerate(files):
-            if (mode in archivo):
+            if (".mat" in archivo):
 
-                tiempos,tira = np.loadtxt(dirpath+'/'+archivo,skiprows=3, delimiter=",", unpack=True)
+                a = loadmat(dirpath+'/'+archivo)
+                tira = a['A']
+                tiempos = np.arange(0,0.5-a['Tinterval'][0][0],a['Tinterval'][0][0])
 
-                inf = tira != np.inf
-                count_inf = np.sum(tira == np.inf)
-                slices = tira[inf] > 0.001
+                tiempos_cortado = tiempos[::3]
+                tira_cortado = tira[::3,0]
+
+                inf = tira_cortado != np.inf
+                count_inf = np.sum(tira_cortado == np.inf)
+                slices = tira_cortado[inf] > piso
                 
-                filtrado_V = tira[slices]
-                filtrado_t = tiempos[slices]
+                filtrado_V = tira_cortado[slices]/np.max(tira_cortado[slices])
+                filtrado_t = tiempos_cortado[slices]
 
-                peaks, _ = find_peaks(filtrado_V,distance = 15, height=0.05)
+                peaks, _ = find_peaks(filtrado_V,distance = distance, height=height)
                 maximos_V = filtrado_V[peaks]
                 maximos_t = filtrado_t[peaks]
 
@@ -34,10 +36,10 @@ def detectar_maximos(mode):
                 #print(f'Esto representa %{count_inf*100/len(filtrado_V)}')
                 #print(f'La cantidad de picos saturados es {count_inf} de {len(maximos_V)}')
                 #print(f'Esto representa %{count_inf*100/len(maximos_V)}')
-                archivo = archivo.replace(".csv","").replace("DATA_","").replace("Millones","")
+                archivo = archivo.replace(".mat","")
                 np.savetxt(f"./maximos/Nobinarizados/{archivo}_V",maximos_V)
                 np.savetxt(f"./maximos/Nobinarizados/{archivo}_t",maximos_t)
-                printProgressBar(i + 1 + l*Qdd, l*Qd, prefix = 'Progress:', suffix = 'Complete', length = 50)
+
                 del(tira)
                 del(filtrado_t)
                 del(filtrado_V)
@@ -45,4 +47,3 @@ def detectar_maximos(mode):
                 del(maximos_V)
                 del(peaks)
                 del(tiempos)
-        Qdd += 1
