@@ -22,6 +22,3 @@ def main(crear_maximos, binarizar_archivos, test_estadistico):
 if __name__ == "__main__":
     complejidad([0,1])
     main(False,False,True) 
-
-#10:55
-#10:59
