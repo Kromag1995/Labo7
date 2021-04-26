@@ -64,6 +64,6 @@ def test_all():
             resultados += f";{rr}"
         output += resultados + "\n"
 
-    output_file = open(f'resultados2.csv', 'w')
+    output_file = open(f'resultados_{archivo}.csv', 'w')
     output_file.write(output)
     output_file.close()

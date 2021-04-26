@@ -6,9 +6,9 @@ from scipy.io import loadmat
 
 def detectar_maximos(direccion,distance,height, piso):
     if not  "maximos" in os.listdir():
-        os.mkdir("maximos")
-        os.mkdir("maximos/Nobinarizados")
-        os.mkdir("maximos/Binarizados")
+        os.mkdir("./maximos")
+        os.mkdir("./maximos/Nobinarizados")
+        os.mkdir("./maximos/Binarizados")
     datos=[]
     for dirpath,dirname, files in os.walk(direccion):
         for i, archivo in enumerate(files):
