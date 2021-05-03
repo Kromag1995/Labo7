@@ -27,20 +27,16 @@ def test_fv(datos, dimension_min=1, dimension_max= 20):
     falsosv, msg = tiseanio('false_nearest', '-d1', '-f1.2', f'-m{dimension_min}', f'-M1,{dimension_max}', data=datos, silent=True)
 
     necesito_ver_mas = False
-    dim = 4
+    dim = 5
     if len(falsosv)>0:
         datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.0001, filtro_fuerte = 0.001)
         if not caotico:
             datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.01, filtro_fuerte = 0.05)
             if not caotico:
                 datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.15)
-        if not caotico:
-            dim=19
-            datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.0001, filtro_fuerte = 0.001)
-            if not caotico:
-                datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.01, filtro_fuerte = 0.05)
-                if not caotico:
-                    datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.015)
+                    if not caotico:
+                        dim=20
+                        datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.015)
     else:
         return falsosv,caotico,False,0, True
     return falsosv,caotico,False,d_E, False
