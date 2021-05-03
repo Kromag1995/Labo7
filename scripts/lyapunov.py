@@ -1,5 +1,7 @@
 from pytisean import tiseano, tiseanio
 import numpy as np
+import os
+
 
 def lyapunov(datos,d_E):
     """
@@ -11,13 +13,26 @@ def lyapunov(datos,d_E):
         output: array, el primer elemento es el numero de iteacion, le siguen
             los exponentes de lyapunov y el ultimo elemnto es suma de los exponentes 
     """
-    lyap, msg = tiseanio('lyap_spec', f'-m1,{d_E}', data=datos)
-    lyapspec=lyap[-1] 
-    sum_lyapunov=sum(lyapspec)-lyap[-1][0]
+    lyap, msg = tiseanio('lyap_spec', f'-m1,{d_E}', data=datos, silent=True)
+    print(lyap)
     paso = False
-    for ll in lyapspec[1:]:
-        if ll>0 and sum_lyapunov<0:
-            paso = True
+    if len(lyap) != 0:
+        try:
+            lyapspec=lyap[-1] 
+            sum_lyapunov=sum(lyapspec)-lyap[-1][0]
+            for ll in lyapspec[1:]:
+                if ll>0 and sum_lyapunov<0:
+                    paso = True
+        except:
+            sum_lyapunov= sum(lyap) - lyap[0]
+            for ll in lyap[1:]:
+                if ll>0 and sum_lyapunov<0:
+                    paso = True
+            print("Paso por except")
+    else:
+        print("Lyap vacio")
+        lyapspec = 0
+        sum_lyapunov = 0
     output=np.append(lyapspec,sum_lyapunov)
     del(lyap)
     del(lyapspec)

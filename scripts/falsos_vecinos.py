@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pytisean import tiseanio
+from .calcular_dE import calcular_dE  
 import matplotlib.pyplot as plt
 import numpy as np
 import time
@@ -21,27 +22,25 @@ def test_fv(datos, dimension_min=1, dimension_max= 20):
         caotico: booleano que indica si se encontro una dimension de embedding
         i+1: la dimension de embedding
     """
-    falsosv, msg = tiseanio('false_nearest', '-d1',f'-m{dimension_min}',f'-M1,{dimension_max}' ,'-V2', data=datos)
-    caotico = False
-    neecsito_ver_mas = True
-    fv_anterior = 100
-    for i in range(len(falsosv[:,1])):
-        if falsosv[i,1] < 0.01:
-            caotico = True
-            neecsito_ver_mas = False
-            break
-        else:
-            if fv_anterior == 100:
-                fv_anterior = falsosv[i,1]
-            else:
-                variacionfv = 1 - falsosv[i,1]/fv_anterior
-                if variacionfv < -0.1:
-                    caotico = False
-                    neecsito_ver_mas = False
-                    break
-                elif variacionfv < 0.01 and falsosv[i,1] <= 0.05:
-                    caotico = True
-                    neecsito_ver_mas = False
-                    break
-                fv_anterior = falsosv[i,1]
-    return falsosv,caotico,neecsito_ver_mas,i+1
+
+
+    falsosv, msg = tiseanio('false_nearest', '-d1', '-f1.2', f'-m{dimension_min}', f'-M1,{dimension_max}', data=datos, silent=True)
+
+    necesito_ver_mas = False
+    dim = 4
+    if len(falsosv)>0:
+        datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.0001, filtro_fuerte = 0.001)
+        if not caotico:
+            datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.01, filtro_fuerte = 0.05)
+            if not caotico:
+                datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.15)
+        if not caotico:
+            dim=19
+            datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.0001, filtro_fuerte = 0.001)
+            if not caotico:
+                datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.01, filtro_fuerte = 0.05)
+                if not caotico:
+                    datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.015)
+    else:
+        return falsosv,caotico,False,0, True
+    return falsosv,caotico,False,d_E, False

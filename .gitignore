@@ -15,5 +15,10 @@
 /.ipynb_checkpoints
 */.ipynb_checkpoints
 */__pycache__
+/fotosconsultas
+/post_analisis
+/falsos vecinos
+/.vscode
+/fmaximos
 Makefile
 config.*
