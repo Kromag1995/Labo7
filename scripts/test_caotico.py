@@ -20,7 +20,7 @@ def test_caotico():
     Script para calcular la dimension de embedding utilizando primeros vecinos y
     luego calcular los exponentes de lyapunov para determinar la caoticidad del sistema
     """
-    input_path = './maximos/Nobinarizados/test/'
+    input_path = './maximos/Nobinarizados/'
     output_path = './falsos vecinos/'
     if 'falsos vecinos' not in os.listdir():
         os.mkdir(output_path)

@@ -32,11 +32,12 @@ def test_fv(datos, dimension_min=1, dimension_max= 20):
         datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.0001, filtro_fuerte = 0.001)
         if not caotico:
             datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.01, filtro_fuerte = 0.05)
+            print(caotico)
             if not caotico:
                 datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.15)
-                    if not caotico:
-                        dim=20
-                        datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.015)
+                if not caotico:
+                    dim=20
+                    datos,caotico,neecsito_ver_mas,d_E = calcular_dE(falsosv[:,1][:dim],variacion_min = 0.1, filtro_suave = 0.1, filtro_fuerte = 0.15)
     else:
         return falsosv,caotico,False,0, True
     return falsosv,caotico,False,d_E, False

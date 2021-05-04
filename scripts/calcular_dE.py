@@ -5,8 +5,8 @@ def calcular_dE(datos, variacion_min, filtro_fuerte, filtro_suave):
     caotico = False
     necesito_ver_mas = False
     fv_anterior = 100
-    print(datos)
     for i in range(len(datos)):
+
         if datos[i] < filtro_fuerte:
             caotico = True
             necesito_ver_mas = False
@@ -20,7 +20,7 @@ def calcular_dE(datos, variacion_min, filtro_fuerte, filtro_suave):
                     caotico = False
                     necesito_ver_mas = False
                     break
-                elif variacionfv < variacion_min and datos[i] <= filtro_suave:
+                elif variacionfv < variacion_min and datos[i] < filtro_suave:
                     caotico = True
                     necesito_ver_mas = False
                     break
