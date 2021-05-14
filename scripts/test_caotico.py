@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from .falsos_vecinos import test_fv 
 from .lyapunov import lyapunov
-
+from datetime import datetime
 class bcolors:
     FAIL = '\033[91m'
     OKGREEN = '\033[92m'
@@ -25,20 +25,22 @@ def test_caotico():
     if 'falsos vecinos' not in os.listdir():
         os.mkdir(output_path)
     paso = False
+    archivos_ya_creados = os.listdir(output_path)
     for dirpath,dirname, files in os.walk(input_path):
         for archivo in files:
-
+            if archivo+"fv" in archivos_ya_creados:
+                print("Saltando: ", output_path+archivo+"fv")
+                continue
+            print(datetime.now().minute)
             datos = np.genfromtxt(dirpath+'/'+archivo, dtype= None)
             
             print(f"{bcolors.OKBLUE}{archivo}{bcolors.ENDC}")
             
             fv, caotico, neecsito_ver_mas, d_E, saltar  =  test_fv(datos, 1, 20)
-            
+            np.savetxt(output_path+archivo+"fv", np.append(d_E, fv) , delimiter=',', header="La primera linea es la dimension de embedding, sigue la matriz de false_nearest")
             if saltar:
                 continue
-            
             print(fv)
-            np.savetxt(output_path+archivo+"fv", np.append(d_E, fv) , delimiter=',', header="La primera linea es la dimension de embedding, sigue la matriz de false_nearest")
             
             lyap = 0
             paso =False

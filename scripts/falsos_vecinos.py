@@ -25,7 +25,7 @@ def test_fv(datos, dimension_min=1, dimension_max= 20):
 
 
     falsosv, msg = tiseanio('false_nearest', '-d1', '-f1.2', f'-m{dimension_min}', f'-M1,{dimension_max}', data=datos, silent=True)
-    caotico =False
+    caotico = False
     necesito_ver_mas = False
     dim = 5
     if len(falsosv)>0:
